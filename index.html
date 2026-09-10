@@ -1,631 +1,767 @@
-```html
 <!DOCTYPE html>
 <html lang="th">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>ระบบสุริยะ | วิชาวิทยาศาสตร์</title>
+<title>ระบบสุริยะ | Science Learning Website</title>
 
-    <style>
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-            font-family: "Arial", sans-serif;
-        }
+<style>
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    scroll-behavior: smooth;
+}
 
-        html {
-            scroll-behavior: smooth;
-        }
+body {
+    font-family: "Arial", "Tahoma", sans-serif;
+    background: #050b24;
+    color: white;
+    line-height: 1.7;
+}
 
-        body {
-            background: #050816;
-            color: white;
-        }
+/* ===== พื้นหลังดาว ===== */
+body::before {
+    content: "";
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    background-image:
+        radial-gradient(white 1px, transparent 1px),
+        radial-gradient(white 1px, transparent 1px);
+    background-size: 80px 80px, 120px 120px;
+    background-position: 0 0, 40px 60px;
+    opacity: 0.35;
+    z-index: -1;
+}
 
-        /* เมนู */
-        nav {
-            position: fixed;
-            top: 0;
-            width: 100%;
-            background: rgba(5, 8, 22, 0.9);
-            padding: 18px 8%;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            z-index: 1000;
-            backdrop-filter: blur(10px);
-        }
+/* ===== Navbar ===== */
+nav {
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    background: rgba(5, 11, 36, 0.95);
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid #263b76;
+}
 
-        .logo {
-            font-size: 24px;
-            font-weight: bold;
-            color: #ffd43b;
-        }
+nav ul {
+    list-style: none;
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+}
 
-        nav ul {
-            display: flex;
-            list-style: none;
-            gap: 25px;
-        }
+nav ul li a {
+    display: block;
+    color: white;
+    text-decoration: none;
+    padding: 15px 18px;
+    transition: 0.3s;
+}
 
-        nav a {
-            color: white;
-            text-decoration: none;
-            transition: 0.3s;
-        }
+nav ul li a:hover {
+    background: #274bb5;
+    color: #ffd700;
+}
 
-        nav a:hover {
-            color: #ffd43b;
-        }
+/* ===== Hero ===== */
+.hero {
+    min-height: 600px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding: 40px 20px;
+    background:
+        radial-gradient(circle at center, rgba(41, 77, 180, 0.35), transparent 45%);
+}
 
-        /* หน้าแรก */
-        .hero {
-            min-height: 100vh;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            text-align: center;
-            padding: 100px 20px 50px;
+.hero h1 {
+    font-size: 60px;
+    color: #ffd700;
+    text-shadow: 0 0 20px #ffcc00;
+    animation: floating 3s ease-in-out infinite;
+}
 
-            background:
-                radial-gradient(circle at 50% 40%, #1b245f 0%, #080b25 40%, #02030c 100%);
-        }
+.hero h2 {
+    font-size: 28px;
+    margin-top: 10px;
+    color: #b9caff;
+}
 
-        .sun {
-            width: 150px;
-            height: 150px;
-            border-radius: 50%;
-            background: #ffd43b;
-            box-shadow:
-                0 0 40px #ffd43b,
-                0 0 80px #ff9f1c,
-                0 0 120px rgba(255, 159, 28, 0.4);
-            margin-bottom: 40px;
-        }
+.hero p {
+    max-width: 700px;
+    margin-top: 20px;
+    font-size: 18px;
+    color: #e1e7ff;
+}
 
-        .hero h1 {
-            font-size: 55px;
-            margin-bottom: 15px;
-        }
+.btn {
+    display: inline-block;
+    margin-top: 30px;
+    padding: 12px 30px;
+    border-radius: 30px;
+    background: #3455d1;
+    color: white;
+    text-decoration: none;
+    transition: 0.3s;
+    box-shadow: 0 0 15px rgba(52,85,209,0.6);
+}
 
-        .hero h1 span {
-            color: #ffd43b;
-        }
+.btn:hover {
+    transform: scale(1.08);
+    background: #ffd700;
+    color: #111;
+}
 
-        .hero p {
-            max-width: 700px;
-            font-size: 20px;
-            color: #cbd5e1;
-            line-height: 1.8;
-        }
+/* ===== ดาวเคราะห์ตกแต่ง ===== */
+.space-system {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 15px;
+    margin: 40px 0;
+    flex-wrap: wrap;
+}
 
-        .btn {
-            margin-top: 30px;
-            padding: 13px 28px;
-            background: #ffd43b;
-            color: #111827;
-            border-radius: 30px;
-            text-decoration: none;
-            font-weight: bold;
-            transition: 0.3s;
-        }
+.sun {
+    width: 100px;
+    height: 100px;
+    background: #ffcc00;
+    border-radius: 50%;
+    box-shadow: 0 0 50px #ff9900;
+}
 
-        .btn:hover {
-            transform: scale(1.05);
-            background: white;
-        }
+.planet {
+    border-radius: 50%;
+    animation: orbit 4s linear infinite;
+}
 
-        /* ส่วนเนื้อหา */
-        section {
-            padding: 90px 8%;
-        }
+.p1 {
+    width: 20px;
+    height: 20px;
+    background: #999;
+}
 
-        .section-title {
-            text-align: center;
-            font-size: 38px;
-            margin-bottom: 15px;
-            color: #ffd43b;
-        }
+.p2 {
+    width: 30px;
+    height: 30px;
+    background: #d49b58;
+}
 
-        .section-subtitle {
-            text-align: center;
-            color: #94a3b8;
-            margin-bottom: 45px;
-        }
+.p3 {
+    width: 35px;
+    height: 35px;
+    background: #2875d8;
+}
 
-        .about {
-            max-width: 900px;
-            margin: auto;
-            text-align: center;
-            line-height: 2;
-            color: #dbeafe;
-            font-size: 18px;
-        }
+.p4 {
+    width: 28px;
+    height: 28px;
+    background: #c44a35;
+}
 
-        /* การ์ดดาวเคราะห์ */
-        .planet-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-            gap: 25px;
-        }
+.p5 {
+    width: 60px;
+    height: 60px;
+    background: #c99b62;
+}
 
-        .planet-card {
-            background: rgba(255,255,255,0.06);
-            border: 1px solid rgba(255,255,255,0.1);
-            border-radius: 20px;
-            padding: 25px;
-            text-align: center;
-            transition: 0.3s;
-        }
+.p6 {
+    width: 55px;
+    height: 55px;
+    background: #e0c486;
+}
 
-        .planet-card:hover {
-            transform: translateY(-10px);
-            border-color: #ffd43b;
-            box-shadow: 0 10px 35px rgba(0,0,0,0.4);
-        }
+.p7 {
+    width: 45px;
+    height: 45px;
+    background: #77c5d8;
+}
 
-        .planet {
-            width: 100px;
-            height: 100px;
-            border-radius: 50%;
-            margin: 0 auto 20px;
-        }
+.p8 {
+    width: 45px;
+    height: 45px;
+    background: #4369d1;
+}
 
-        .mercury {
-            background: #9ca3af;
-        }
+/* ===== Container ===== */
+.container {
+    width: 90%;
+    max-width: 1100px;
+    margin: auto;
+}
 
-        .venus {
-            background: #d99b45;
-        }
+/* ===== Section ===== */
+section {
+    padding: 80px 0;
+}
 
-        .earth {
-            background: linear-gradient(135deg, #2563eb 45%, #22c55e 46%);
-        }
+section h2 {
+    text-align: center;
+    font-size: 36px;
+    color: #ffd700;
+    margin-bottom: 40px;
+}
 
-        .mars {
-            background: #dc4b36;
-        }
+.content-box {
+    background: rgba(17, 29, 75, 0.85);
+    border: 1px solid #30458c;
+    border-radius: 20px;
+    padding: 30px;
+    margin-bottom: 25px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+    transition: 0.3s;
+}
 
-        .jupiter {
-            width: 130px;
-            height: 130px;
-            background: linear-gradient(
-                #d8a15d 15%,
-                #f1d0a0 15% 30%,
-                #a96f44 30% 45%,
-                #e4c39a 45% 60%,
-                #9b603d 60% 75%,
-                #dfb780 75%
-            );
-        }
+.content-box:hover {
+    transform: translateY(-8px);
+    border-color: #ffd700;
+    box-shadow: 0 0 25px rgba(255,215,0,0.2);
+}
 
-        .saturn {
-            width: 110px;
-            height: 110px;
-            background: #d6b47b;
-            position: relative;
-        }
+.content-box h3 {
+    color: #64b5ff;
+    font-size: 25px;
+    margin-bottom: 15px;
+}
 
-        .saturn::after {
-            content: "";
-            position: absolute;
-            width: 160px;
-            height: 35px;
-            border: 6px solid #b99361;
-            border-radius: 50%;
-            left: -25px;
-            top: 38px;
-            transform: rotate(-15deg);
-        }
+.content-box p {
+    color: #e3e7f7;
+}
 
-        .uranus {
-            background: #72d5e6;
-        }
+/* ===== ดาวเคราะห์ 8 ดวง ===== */
+.planets {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 20px;
+}
 
-        .neptune {
-            background: #3159c7;
-        }
+.planet-card {
+    background: rgba(17, 29, 75, 0.9);
+    padding: 25px;
+    border-radius: 18px;
+    text-align: center;
+    border: 1px solid #30458c;
+    transition: 0.4s;
+}
 
-        .planet-card h3 {
-            font-size: 23px;
-            margin-bottom: 10px;
-        }
+.planet-card:hover {
+    transform: translateY(-10px) scale(1.03);
+    border-color: #ffd700;
+}
 
-        .planet-card p {
-            color: #aeb8c7;
-            line-height: 1.7;
-        }
+.planet-circle {
+    width: 90px;
+    height: 90px;
+    border-radius: 50%;
+    margin: 0 auto 15px;
+    box-shadow: 0 0 20px rgba(255,255,255,0.2);
+}
 
-        /* ข้อมูล */
-        .facts {
-            background: #080d25;
-        }
+.mercury {
+    background: #888;
+}
 
-        .fact-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-            gap: 25px;
-        }
+.venus {
+    background: #d6a25e;
+}
 
-        .fact {
-            padding: 30px;
-            border-radius: 18px;
-            background: rgba(255,255,255,0.06);
-            text-align: center;
-        }
+.earth {
+    background: linear-gradient(135deg, #1c72d8, #29a84a);
+}
 
-        .fact .icon {
-            font-size: 40px;
-            margin-bottom: 15px;
-        }
+.mars {
+    background: #c94c35;
+}
 
-        .fact h3 {
-            color: #ffd43b;
-            margin-bottom: 10px;
-        }
+.jupiter {
+    background: #c9a574;
+}
 
-        .fact p {
-            color: #cbd5e1;
-            line-height: 1.7;
-        }
+.saturn {
+    background: #dfc27b;
+}
 
-        /* แบบทดสอบ */
-        .quiz {
-            max-width: 700px;
-            margin: auto;
-            background: rgba(255,255,255,0.06);
-            padding: 35px;
-            border-radius: 20px;
-        }
+.uranus {
+    background: #78cbd8;
+}
 
-        .quiz h3 {
-            margin-bottom: 20px;
-            line-height: 1.6;
-        }
+.neptune {
+    background: #3459cc;
+}
 
-        .quiz button {
-            display: block;
-            width: 100%;
-            padding: 13px;
-            margin: 10px 0;
-            border: none;
-            border-radius: 10px;
-            cursor: pointer;
-            background: #17203f;
-            color: white;
-            text-align: left;
-            font-size: 16px;
-            transition: 0.2s;
-        }
+.planet-card h3 {
+    color: #ffd700;
+    margin-bottom: 8px;
+}
 
-        .quiz button:hover {
-            background: #ffd43b;
-            color: #111827;
-        }
+/* ===== Timeline ===== */
+.timeline {
+    border-left: 4px solid #4169e1;
+    padding-left: 30px;
+}
 
-        #result {
-            margin-top: 20px;
-            font-weight: bold;
-            text-align: center;
-            font-size: 18px;
-        }
+.timeline-item {
+    margin-bottom: 30px;
+    position: relative;
+}
 
-        footer {
-            text-align: center;
-            padding: 30px;
-            background: #02030c;
-            color: #94a3b8;
-        }
+.timeline-item::before {
+    content: "";
+    position: absolute;
+    left: -42px;
+    top: 5px;
+    width: 18px;
+    height: 18px;
+    background: #ffd700;
+    border-radius: 50%;
+    box-shadow: 0 0 15px #ffd700;
+}
 
-        /* มือถือ */
-        @media(max-width: 700px) {
+.timeline-item h3 {
+    color: #64b5ff;
+}
 
-            nav {
-                padding: 15px 5%;
-            }
+/* ===== Footer ===== */
+footer {
+    text-align: center;
+    padding: 40px 20px;
+    background: #020617;
+    border-top: 1px solid #263b76;
+    color: #b7c1e5;
+}
 
-            nav ul {
-                gap: 10px;
-                font-size: 13px;
-            }
+footer strong {
+    color: #ffd700;
+}
 
-            .hero h1 {
-                font-size: 38px;
-            }
+/* ===== Animation ===== */
+@keyframes floating {
+    0%, 100% {
+        transform: translateY(0);
+    }
 
-            .hero p {
-                font-size: 16px;
-            }
+    50% {
+        transform: translateY(-15px);
+    }
+}
 
-            section {
-                padding: 70px 5%;
-            }
+@keyframes orbit {
+    0% {
+        transform: translateY(0);
+    }
 
-            .section-title {
-                font-size: 30px;
-            }
-        }
-    </style>
+    50% {
+        transform: translateY(-10px);
+    }
+
+    100% {
+        transform: translateY(0);
+    }
+}
+
+/* ===== Responsive ===== */
+@media (max-width: 800px) {
+
+    .hero h1 {
+        font-size: 42px;
+    }
+
+    .planets {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    nav ul li a {
+        padding: 10px;
+        font-size: 14px;
+    }
+}
+
+@media (max-width: 500px) {
+
+    .planets {
+        grid-template-columns: 1fr;
+    }
+
+    .hero h1 {
+        font-size: 34px;
+    }
+
+    section h2 {
+        font-size: 28px;
+    }
+}
+</style>
 </head>
 
 <body>
 
-<!-- เมนู -->
+<!-- ===== เมนู ===== -->
 <nav>
-    <div class="logo">🌌 Solar System</div>
-
-    <ul>
-        <li><a href="#home">หน้าแรก</a></li>
-        <li><a href="#about">ความรู้</a></li>
-        <li><a href="#planets">ดาวเคราะห์</a></li>
-        <li><a href="#quiz">แบบทดสอบ</a></li>
-    </ul>
+<ul>
+    <li><a href="#home">หน้าหลัก</a></li>
+    <li><a href="#intro">ความรู้เบื้องต้น</a></li>
+    <li><a href="#sun">ดวงอาทิตย์</a></li>
+    <li><a href="#planets">ดาวเคราะห์</a></li>
+    <li><a href="#moon">ดวงจันทร์</a></li>
+    <li><a href="#objects">วัตถุในอวกาศ</a></li>
+    <li><a href="#orbit">การโคจร</a></li>
+    <li><a href="#day">กลางวัน-กลางคืน</a></li>
+    <li><a href="#space">การสำรวจอวกาศ</a></li>
+</ul>
 </nav>
 
 
-<!-- หน้าแรก -->
-<section class="hero" id="home">
+<!-- ===== หน้าแรก ===== -->
+<header class="hero" id="home">
 
-    <div class="sun"></div>
-
-    <h1>เรียนรู้เรื่อง <span>ระบบสุริยะ</span></h1>
-
-    <p>
-        สำรวจความมหัศจรรย์ของอวกาศ
-        เรียนรู้จักดวงอาทิตย์ ดาวเคราะห์
-        และวัตถุต่าง ๆ ที่อยู่ภายในระบบสุริยะ
-    </p>
-
-    <a href="#planets" class="btn">
-        🚀 สำรวจดาวเคราะห์
-    </a>
-
-</section>
-
-
-<!-- ความรู้ -->
-<section id="about">
-
-    <h2 class="section-title">☀️ ระบบสุริยะคืออะไร?</h2>
-
-    <p class="section-subtitle">
-        ความรู้พื้นฐานเกี่ยวกับระบบสุริยะ
-    </p>
-
-    <div class="about">
-
-        ระบบสุริยะ คือ ระบบที่มีดวงอาทิตย์เป็นศูนย์กลาง
-        และมีวัตถุท้องฟ้าต่าง ๆ โคจรรอบดวงอาทิตย์
-        โดยประกอบด้วยดาวเคราะห์ 8 ดวง
-        ดาวเคราะห์แคระ ดวงจันทร์ ดาวเคราะห์น้อย
-        ดาวหาง และวัตถุอื่น ๆ อีกมากมาย
-
+    <div class="space-system">
+        <div class="sun"></div>
+        <div class="planet p1"></div>
+        <div class="planet p2"></div>
+        <div class="planet p3"></div>
+        <div class="planet p4"></div>
+        <div class="planet p5"></div>
+        <div class="planet p6"></div>
+        <div class="planet p7"></div>
+        <div class="planet p8"></div>
     </div>
 
+    <h1>🌌 ระบบสุริยะ</h1>
+
+    <h2>Science Learning Website</h2>
+
+    <p>
+        เว็บไซต์เพื่อการเรียนรู้เกี่ยวกับระบบสุริยะ
+        ดวงอาทิตย์ ดาวเคราะห์ ดวงจันทร์
+        และวัตถุต่าง ๆ ที่อยู่ในอวกาศ
+    </p>
+
+    <a href="#intro" class="btn">🚀 เริ่มเรียนรู้</a>
+
+</header>
+
+
+<main class="container">
+
+<!-- ===== 1 ===== -->
+<section id="intro">
+
+<h2>🌌 1. ความรู้เบื้องต้นเกี่ยวกับระบบสุริยะ</h2>
+
+<div class="content-box">
+
+<h3>ระบบสุริยะคืออะไร?</h3>
+
+<p>
+ระบบสุริยะ คือ ระบบที่มีดวงอาทิตย์เป็นศูนย์กลาง
+และมีวัตถุท้องฟ้าต่าง ๆ โคจรรอบดวงอาทิตย์
+ได้แก่ ดาวเคราะห์ทั้ง 8 ดวง ดวงจันทร์
+ดาวเคราะห์น้อย ดาวหาง และวัตถุขนาดเล็กอื่น ๆ
+</p>
+
+<br>
+
+<p>
+ดาวเคราะห์ทั้ง 8 ดวงมีลักษณะ ขนาด
+องค์ประกอบ และระยะห่างจากดวงอาทิตย์แตกต่างกัน
+โดยดาวเคราะห์แต่ละดวงจะเคลื่อนที่ตามวงโคจรของตนเอง
+</p>
+
+</div>
+
 </section>
 
 
-<!-- ดาวเคราะห์ -->
+<!-- ===== 2 ===== -->
+<section id="sun">
+
+<h2>☀️ 2. ดวงอาทิตย์และความสำคัญต่อระบบสุริยะ</h2>
+
+<div class="content-box">
+
+<h3>ดวงอาทิตย์</h3>
+
+<p>
+ดวงอาทิตย์เป็นดาวฤกษ์ที่อยู่บริเวณใจกลางระบบสุริยะ
+เป็นแหล่งพลังงานและแสงสว่างที่สำคัญของระบบสุริยะ
+แรงโน้มถ่วงของดวงอาทิตย์มีบทบาทสำคัญ
+ในการทำให้ดาวเคราะห์โคจรรอบดวงอาทิตย์
+</p>
+
+<br>
+
+<p>
+พลังงานจากดวงอาทิตย์มีความสำคัญต่อสิ่งมีชีวิตบนโลก
+เพราะช่วยให้เกิดแสงและความร้อน
+รวมถึงมีส่วนเกี่ยวข้องกับกระบวนการต่าง ๆ
+เช่น การสังเคราะห์แสงของพืช
+</p>
+
+</div>
+
+</section>
+
+
+<!-- ===== 3 ===== -->
 <section id="planets">
 
-    <h2 class="section-title">🪐 ดาวเคราะห์ทั้ง 8 ดวง</h2>
+<h2>🪐 3. ดาวเคราะห์ทั้ง 8 ดวง</h2>
 
-    <p class="section-subtitle">
-        เรียงตามระยะห่างจากดวงอาทิตย์
-    </p>
+<div class="planets">
 
-    <div class="planet-grid">
+<div class="planet-card">
+<div class="planet-circle mercury"></div>
+<h3>ดาวพุธ</h3>
+<p>ดาวเคราะห์ที่อยู่ใกล้ดวงอาทิตย์ที่สุด</p>
+</div>
 
-        <div class="planet-card">
-            <div class="planet mercury"></div>
-            <h3>ดาวพุธ</h3>
-            <p>
-                ดาวเคราะห์ที่อยู่ใกล้ดวงอาทิตย์มากที่สุด
-                และเป็นดาวเคราะห์ที่มีขนาดเล็กที่สุด
-            </p>
-        </div>
+<div class="planet-card">
+<div class="planet-circle venus"></div>
+<h3>ดาวศุกร์</h3>
+<p>มีบรรยากาศหนาแน่นและอุณหภูมิพื้นผิวสูง</p>
+</div>
 
-        <div class="planet-card">
-            <div class="planet venus"></div>
-            <h3>ดาวศุกร์</h3>
-            <p>
-                เป็นดาวเคราะห์ที่มีอุณหภูมิพื้นผิวสูงมาก
-                และมีขนาดใกล้เคียงกับโลก
-            </p>
-        </div>
+<div class="planet-card">
+<div class="planet-circle earth"></div>
+<h3>โลก</h3>
+<p>ดาวเคราะห์ที่มีสิ่งมีชีวิตและมีน้ำในสถานะของเหลว</p>
+</div>
 
-        <div class="planet-card">
-            <div class="planet earth"></div>
-            <h3>โลก</h3>
-            <p>
-                ดาวเคราะห์ที่มีสิ่งมีชีวิตอาศัยอยู่
-                และมีน้ำในสถานะของเหลวจำนวนมาก
-            </p>
-        </div>
+<div class="planet-card">
+<div class="planet-circle mars"></div>
+<h3>ดาวอังคาร</h3>
+<p>มีพื้นผิวสีแดงและมีภูเขาขนาดใหญ่</p>
+</div>
 
-        <div class="planet-card">
-            <div class="planet mars"></div>
-            <h3>ดาวอังคาร</h3>
-            <p>
-                มีพื้นผิวสีแดงเนื่องจากแร่เหล็ก
-                จึงได้รับฉายาว่า ดาวเคราะห์สีแดง
-            </p>
-        </div>
+<div class="planet-card">
+<div class="planet-circle jupiter"></div>
+<h3>ดาวพฤหัสบดี</h3>
+<p>ดาวเคราะห์ที่มีขนาดใหญ่ที่สุดในระบบสุริยะ</p>
+</div>
 
-        <div class="planet-card">
-            <div class="planet jupiter"></div>
-            <h3>ดาวพฤหัสบดี</h3>
-            <p>
-                ดาวเคราะห์ที่มีขนาดใหญ่ที่สุดในระบบสุริยะ
-            </p>
-        </div>
+<div class="planet-card">
+<div class="planet-circle saturn"></div>
+<h3>ดาวเสาร์</h3>
+<p>โดดเด่นด้วยระบบวงแหวนที่สวยงาม</p>
+</div>
 
-        <div class="planet-card">
-            <div class="planet saturn"></div>
-            <h3>ดาวเสาร์</h3>
-            <p>
-                มีวงแหวนที่โดดเด่นและประกอบด้วย
-                น้ำแข็ง เศษหิน และฝุ่น
-            </p>
-        </div>
+<div class="planet-card">
+<div class="planet-circle uranus"></div>
+<h3>ดาวยูเรนัส</h3>
+<p>มีแกนหมุนเอียงมากและมีสีฟ้าอมเขียว</p>
+</div>
 
-        <div class="planet-card">
-            <div class="planet uranus"></div>
-            <h3>ดาวยูเรนัส</h3>
-            <p>
-                เป็นดาวเคราะห์แก๊สที่มีสีฟ้าอมเขียว
-                และหมุนรอบตัวเองในลักษณะเอียงมาก
-            </p>
-        </div>
+<div class="planet-card">
+<div class="planet-circle neptune"></div>
+<h3>ดาวเนปจูน</h3>
+<p>ดาวเคราะห์ที่อยู่ไกลจากดวงอาทิตย์ที่สุด</p>
+</div>
 
-        <div class="planet-card">
-            <div class="planet neptune"></div>
-            <h3>ดาวเนปจูน</h3>
-            <p>
-                ดาวเคราะห์ที่อยู่ไกลจากดวงอาทิตย์มากที่สุด
-                ในบรรดาดาวเคราะห์ทั้ง 8 ดวง
-            </p>
-        </div>
-
-    </div>
+</div>
 
 </section>
 
 
-<!-- เกร็ดความรู้ -->
-<section class="facts">
+<!-- ===== 4 ===== -->
+<section id="moon">
 
-    <h2 class="section-title">🔭 เกร็ดความรู้</h2>
+<h2>🌙 4. ดวงจันทร์และบริวารของดาวเคราะห์</h2>
 
-    <p class="section-subtitle">
-        เรื่องน่าสนใจเกี่ยวกับระบบสุริยะ
-    </p>
+<div class="content-box">
 
-    <div class="fact-grid">
+<h3>ดวงจันทร์</h3>
 
-        <div class="fact">
-            <div class="icon">☀️</div>
-            <h3>ดวงอาทิตย์</h3>
-            <p>
-                เป็นดาวฤกษ์ที่อยู่ใจกลางระบบสุริยะ
-                และเป็นแหล่งพลังงานสำคัญของโลก
-            </p>
-        </div>
+<p>
+ดวงจันทร์เป็นบริวารตามธรรมชาติของโลก
+และโคจรรอบโลก ดวงจันทร์ไม่มีแสงสว่างในตัวเอง
+แต่สามารถมองเห็นได้เนื่องจากสะท้อนแสงจากดวงอาทิตย์
+</p>
 
-        <div class="fact">
-            <div class="icon">🌍</div>
-            <h3>โลก</h3>
-            <p>
-                โลกใช้เวลาประมาณ 365 วัน
-                ในการโคจรรอบดวงอาทิตย์หนึ่งรอบ
-            </p>
-        </div>
+<br>
 
-        <div class="fact">
-            <div class="icon">🌙</div>
-            <h3>ดวงจันทร์</h3>
-            <p>
-                เป็นบริวารตามธรรมชาติของโลก
-                และโคจรรอบโลก
-            </p>
-        </div>
+<p>
+นอกจากโลกแล้ว ดาวเคราะห์หลายดวงในระบบสุริยะ
+ก็มีดวงจันทร์เป็นบริวาร เช่น ดาวพฤหัสบดี
+ดาวเสาร์ ดาวยูเรนัส และดาวเนปจูน
+</p>
 
-        <div class="fact">
-            <div class="icon">⭐</div>
-            <h3>อวกาศ</h3>
-            <p>
-                นอกระบบสุริยะยังมีกาแล็กซี
-                ดาวฤกษ์ และวัตถุท้องฟ้าอีกจำนวนมาก
-            </p>
-        </div>
-
-    </div>
+</div>
 
 </section>
 
 
-<!-- แบบทดสอบ -->
-<section id="quiz">
+<!-- ===== 5 ===== -->
+<section id="objects">
 
-    <h2 class="section-title">🧠 แบบทดสอบ</h2>
+<h2>☄️ 5. ดาวเคราะห์น้อย ดาวหาง และวัตถุในระบบสุริยะ</h2>
 
-    <p class="section-subtitle">
-        ทดสอบความรู้เรื่องระบบสุริยะ
-    </p>
+<div class="content-box">
 
-    <div class="quiz">
+<h3>☄️ ดาวหาง</h3>
 
-        <h3>
-            1. ดาวเคราะห์ดวงใดอยู่ใกล้ดวงอาทิตย์มากที่สุด?
-        </h3>
+<p>
+ดาวหางเป็นวัตถุที่ประกอบด้วยน้ำแข็ง ฝุ่น
+และสารต่าง ๆ เมื่อเข้าใกล้ดวงอาทิตย์
+ความร้อนจะทำให้น้ำแข็งระเหิด
+จนเกิดเป็นหางที่สามารถมองเห็นได้
+</p>
 
-        <button onclick="checkAnswer(false)">
-            A. โลก
-        </button>
+</div>
 
-        <button onclick="checkAnswer(true)">
-            B. ดาวพุธ
-        </button>
+<div class="content-box">
 
-        <button onclick="checkAnswer(false)">
-            C. ดาวอังคาร
-        </button>
+<h3>🪨 ดาวเคราะห์น้อย</h3>
 
-        <button onclick="checkAnswer(false)">
-            D. ดาวพฤหัสบดี
-        </button>
+<p>
+ดาวเคราะห์น้อยเป็นวัตถุขนาดเล็กที่โคจรรอบดวงอาทิตย์
+ส่วนใหญ่พบอยู่บริเวณแถบดาวเคราะห์น้อย
+ระหว่างดาวอังคารและดาวพฤหัสบดี
+</p>
 
-        <div id="result"></div>
+</div>
 
-    </div>
+<div class="content-box">
+
+<h3>🌠 อุกกาบาต</h3>
+
+<p>
+เมื่อวัตถุจากอวกาศเข้าสู่ชั้นบรรยากาศของโลก
+และเกิดการเสียดสีกับอากาศจนเกิดแสงสว่าง
+เราสามารถมองเห็นเป็นปรากฏการณ์ดาวตกได้
+</p>
+
+</div>
 
 </section>
 
 
-<!-- Footer -->
+<!-- ===== 6 ===== -->
+<section id="orbit">
+
+<h2>🔄 6. การโคจรของดาวเคราะห์รอบดวงอาทิตย์</h2>
+
+<div class="content-box">
+
+<h3>การโคจร</h3>
+
+<p>
+ดาวเคราะห์ทั้ง 8 ดวงโคจรรอบดวงอาทิตย์
+เนื่องจากแรงโน้มถ่วงของดวงอาทิตย์
+โดยดาวเคราะห์แต่ละดวงใช้เวลาในการโคจร
+รอบดวงอาทิตย์แตกต่างกัน
+</p>
+
+<br>
+
+<div class="timeline">
+
+<div class="timeline-item">
+<h3>ดาวเคราะห์วงใน</h3>
+<p>ดาวพุธ ดาวศุกร์ โลก และดาวอังคาร</p>
+</div>
+
+<div class="timeline-item">
+<h3>แถบดาวเคราะห์น้อย</h3>
+<p>บริเวณที่มีดาวเคราะห์น้อยจำนวนมาก</p>
+</div>
+
+<div class="timeline-item">
+<h3>ดาวเคราะห์วงนอก</h3>
+<p>ดาวพฤหัสบดี ดาวเสาร์ ดาวยูเรนัส และดาวเนปจูน</p>
+</div>
+
+</div>
+
+</div>
+
+</section>
+
+
+<!-- ===== 7 ===== -->
+<section id="day">
+
+<h2>🌍 7. การเกิดกลางวัน กลางคืน และฤดูกาล</h2>
+
+<div class="content-box">
+
+<h3>🌞 กลางวันและกลางคืน</h3>
+
+<p>
+โลกหมุนรอบตัวเองตลอดเวลา
+โดยใช้เวลาประมาณ 24 ชั่วโมงต่อการหมุนหนึ่งรอบ
+บริเวณที่หันเข้าหาดวงอาทิตย์จะเป็นเวลากลางวัน
+ส่วนบริเวณที่หันออกจากดวงอาทิตย์จะเป็นเวลากลางคืน
+</p>
+
+</div>
+
+<div class="content-box">
+
+<h3>🍂 ฤดูกาล</h3>
+
+<p>
+การเกิดฤดูกาลเกี่ยวข้องกับการเอียงของแกนโลก
+และการโคจรของโลกรอบดวงอาทิตย์
+ทำให้แต่ละพื้นที่ของโลกได้รับแสงจากดวงอาทิตย์
+ในปริมาณและมุมที่แตกต่างกันในแต่ละช่วงเวลา
+</p>
+
+</div>
+
+</section>
+
+
+<!-- ===== 8 ===== -->
+<section id="space">
+
+<h2>🚀 8. การสำรวจอวกาศและยานอวกาศ</h2>
+
+<div class="content-box">
+
+<h3>🚀 การสำรวจอวกาศ</h3>
+
+<p>
+มนุษย์ได้พัฒนาเทคโนโลยีเพื่อศึกษาอวกาศ
+เช่น ดาวเทียม กล้องโทรทรรศน์ ยานสำรวจ
+และสถานีอวกาศ เพื่อเก็บข้อมูลเกี่ยวกับดาวเคราะห์
+ดวงดาว และวัตถุต่าง ๆ ในจักรวาล
+</p>
+
+<br>
+
+<h3>🛰️ ตัวอย่างเทคโนโลยีอวกาศ</h3>
+
+<p>
+• ดาวเทียม ใช้สำหรับสื่อสารและสำรวจโลก<br>
+• กล้องโทรทรรศน์ ใช้ศึกษาวัตถุท้องฟ้า<br>
+• ยานสำรวจ ใช้เดินทางไปศึกษาดาวเคราะห์และดวงจันทร์<br>
+• สถานีอวกาศ ใช้สำหรับการทดลองทางวิทยาศาสตร์
+</p>
+
+</div>
+
+</section>
+
+</main>
+
+
+<!-- ===== Footer ===== -->
 <footer>
 
-    <p>
-        🌌 เว็บไซต์วิชาวิทยาศาสตร์ เรื่อง ระบบสุริยะ
-    </p>
+<p>🌌 <strong>Science Learning Website</strong></p>
 
-    <p>
-        จัดทำเพื่อการศึกษา
-    </p>
+<p>เรื่อง ระบบสุริยะ</p>
+
+<p>เว็บไซต์เพื่อการเรียนรู้วิชาวิทยาศาสตร์</p>
+
+<p>© 2026 Solar System Learning</p>
 
 </footer>
 
-
-<script>
-
-function checkAnswer(correct) {
-
-    const result = document.getElementById("result");
-
-    if (correct) {
-
-        result.innerHTML =
-            "✅ ถูกต้อง! ดาวพุธอยู่ใกล้ดวงอาทิตย์มากที่สุด";
-
-        result.style.color = "#4ade80";
-
-    } else {
-
-        result.innerHTML =
-            "❌ ยังไม่ถูกต้อง ลองใหม่อีกครั้ง";
-
-        result.style.color = "#f87171";
-
-    }
-
-}
-
-</script>
-
 </body>
 </html>
-```
